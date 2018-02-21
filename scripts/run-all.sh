@@ -26,7 +26,7 @@ function runfastqc {
 
     regularizedname=$(echo ${basename}|sed -e 's|/input/||g' -e 's|/|_|g')
 
-    mergedfile=${tempdir}/${regularizedname}.fastq.gz
+    mergedfile=${tmpdir}/${regularizedname}.fastq.gz
 
     echo -e "$tomerge" > ${log}/${regularizedname}_merged.log
 
