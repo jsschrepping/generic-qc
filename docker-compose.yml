@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  generic-qc:
+    build: .
+    image: pwlb/generic-qc
+
+    environment:
+      - JOBS=8
+      - THREADS=2
+
+    volumes:
+      - /home/pawel/Data/bulk/Project_ALH_LCFA/runs:/input:ro
+      - /home/pawel/Data/test-data:/output:rw
