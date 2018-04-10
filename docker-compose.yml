@@ -3,12 +3,13 @@ version: '3'
 services:
   generic-qc:
     build: .
-    image: pwlb/generic-qc
+    image: pwlb/generic-qc:latest
 
     environment:
       - JOBS=8
-      - THREADS=2
+      - THREADS=3
 
     volumes:
-      - /home/pawel/Data/bulk/Project_ALH_LCFA/runs:/input:ro
+      # a folder with all the run folders
+      - /home/pawel/Data/bulk/Project_RNA_Wachten_Jansen_S6:/input:ro
       - /home/pawel/Data/test-data:/output:rw

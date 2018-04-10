@@ -1,4 +1,4 @@
-FROM pwlb/rna-seq-pipeline-base
+FROM pwlb/rna-seq-pipeline-base:v0.1.0
 
 COPY scripts /scripts
 

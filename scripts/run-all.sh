@@ -10,13 +10,6 @@ log=${output}/logs
 
 mkdir -p $output $log $tmpdir $outputfqc
 
-basepaths=$(find $input -name "*.fastq.gz" \
-                | sort \
-                | uniq \
-                | sed -e 's/_[0-9]\{3\}.fastq.gz//g' \
-                | sort \
-                | uniq )
-
 function runfastqc {
     basename=$1
 
@@ -49,7 +42,17 @@ function runfastqc {
 
 export -f runfastqc
 
-parallel --eta --will-cite -j $JOBS runfastqc ::: $basepaths
+pathsfile=$tmpdir/pathsfile.txt
+
+find $input -name "*.fastq.gz" \
+    | sort \
+    | uniq \
+    | sed -e 's/_[0-9]\{3\}.fastq.gz//g' \
+    | sort \
+    | uniq \
+          > $pathsfile
+
+parallel --eta --will-cite -j $JOBS runfastqc :::: $pathsfile
 
 filelist=$tmpdir/logfilelist
 find $outputfqc -name "*_fastqc.zip" >> $filelist
@@ -58,6 +61,9 @@ multiqc \
     -f \
     -o $output \
     --file-list $filelist
+
+chmod -R a+w $output
+chown -R nobody $output
 
 rm -rf $outputfqc
 rm -rf $tmpdir
