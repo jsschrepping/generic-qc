@@ -3,13 +3,12 @@ version: '3'
 services:
   generic-qc:
     build: .
-    image: pwlb/generic-qc:latest
+    image: pwlb/generic-qc:0.2.0
 
     environment:
-      - JOBS=8
-      - THREADS=3
+      - JOBS=10
 
     volumes:
-      # a folder with all the run folders
-      - /home/pawel/Data/bulk/Project_RNA_Wachten_Jansen_S6:/input:ro
-      - /home/pawel/Data/test-data:/output:rw
+      # fastq should contain sub-directories corresponding to runs
+      - ./test/fastq:/input:ro
+      - ./test/output:/output:rw
