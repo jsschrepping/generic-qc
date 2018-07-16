@@ -4,9 +4,7 @@ services:
   generic-qc:
     build: .
     image: pwlb/generic-qc:0.2.0
-
-    environment:
-      - JOBS=10
+    command: --jobs 11
 
     volumes:
       # fastq should contain sub-directories corresponding to runs
