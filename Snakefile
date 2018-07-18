@@ -1,4 +1,5 @@
 from pathlib import Path
+from snakemake.shell import shell
 
 runs, samples, _ = glob_wildcards("/input/{run}/{sample}_{num}.fastq.gz")
 
@@ -49,8 +50,11 @@ rule merge:
         get_files
     output:
         temp("data/{run}__{sample}.fastq.gz")
-    shell:
-        "cat {input} > {output}"
+    run:
+        if len(input) == 1:
+            shell("ln -s {input} {output}")
+        else:
+            shell("cat {input} > {output}")
 
 rule clean:
     shell:
