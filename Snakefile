@@ -1,7 +1,7 @@
 from pathlib import Path
 from snakemake.shell import shell
 
-runs, samples, _ = glob_wildcards("/input/{run}/{sample}_{num}.fastq.gz")
+runs, samples, _ = glob_wildcards("/input/{run}/{sample}_{num,\d{3}}.fastq.gz")
 
 def get_files(wildcards):
     glob = Path("/input").glob(f"""{wildcards.run}/{wildcards.sample}_*.fastq.gz""")
