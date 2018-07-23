@@ -13,7 +13,8 @@ def get_files(wildcards):
 
 rule all:
     input:
-        "multiqc/multiqc.html"
+        "multiqc/multiqc.html",
+        expand("fastqc/{run}/{sample}_fastqc.zip",zip,run=runs,sample=samples)
     shell:
         "chmod -R a+w . &&"
         "chown -R nobody ."
