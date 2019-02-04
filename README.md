@@ -2,13 +2,13 @@ Given `/input` directory of the form
 
     input
     ├── run1
-    │   ├── 3651_ATTCCT_L002_R1_001.fastq.gz
-    │   ├── 3651_ATTCCT_L002_R1_002.fastq.gz
-    │   └── 3651_ATTCCT_L002_R1_003.fastq.gz
+    │   ├── {sample1}_001.fastq.gz
+    │   ├── {sample1}_002.fastq.gz
+    │   └── {sample1}_003.fastq.gz
     └── run2
-        ├── 3652_ACTGAT_L002_R1_001.fastq.gz
-        ├── 3652_ACTGAT_L002_R1_002.fastq.gz
-        └── 3652_ACTGAT_L002_R1_003.fastq.gz
+        ├── {sample2}_001.fastq.gz
+        ├── {sample2}_002.fastq.gz
+        └── {sample3}_001.fastq.gz
 
 does the following.
 
