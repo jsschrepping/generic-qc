@@ -2,7 +2,7 @@ version: '3'
 
 services:
   generic-qc:
-    build: .
+    # build: .
     image: jsschrepping/generic-qc:latest
     command: --jobs 11
 
