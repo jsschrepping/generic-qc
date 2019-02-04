@@ -2,7 +2,7 @@ from pathlib import Path
 from snakemake.shell import shell
 
 # In order to infer the IDs from present files, Snakemake provides the glob_wildcards function. The function matches the given pattern against files present in the filesystem and thereby infers the values for all wildcards in the pattern. A named tuple that contains a list of values for each wildcard is returned.
-runs, samples, _ = glob_wildcards("/input/{run}/{sample}_{num,\d{3}}.fastq.gz")
+(runs, samples, nums) = glob_wildcards("/input/{run}/{sample}_{num,\d{3}}.fastq.gz")
 
 # define function to retrieve all the files from input directory
 def get_files(wildcards):
