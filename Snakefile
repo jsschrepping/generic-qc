@@ -2,11 +2,11 @@ from pathlib import Path
 from snakemake.shell import shell
 
 # In order to infer the IDs from present files, Snakemake provides the glob_wildcards function. The function matches the given pattern against files present in the filesystem and thereby infers the values for all wildcards in the pattern. A named tuple that contains a list of values for each wildcard is returned.
-runs, samples, ids, lanes, reads, nums = glob_wildcards("/input/{run}/{sample}_{id}_{lane}_{read}_{num,\d{3}}.fastq.gz")
+runs, samples, nums= glob_wildcards("/input/{run}/{sample}_{num,\d{3}}.fastq.gz")
 
 # define function to retrieve all the files from input directory
 def get_files(wildcards):
-    glob = Path("/input").glob(f"""{wildcards.run}/{wildcards.sample}_{wildcards.id}_{wildcards.lane}_{wildcards.read}_*.fastq.gz""")
+    glob = Path("/input").glob(f"""{wildcards.run}/{wildcards.sample}_*.fastq.gz""")
     files = list(map(str,glob))
     if len(files) == 0:
         raise Exception(f"""No files found for sample {wildcards.sample}""")
@@ -36,7 +36,7 @@ rule multiqc:
 
 rule fastqc:
     input:
-        "data/{run}_{sample}.fastq.gz"
+        "data/{run}.{sample}.fastq.gz"
     output:
         html="fastqc/{run}/{sample}_fastqc.html",
         zip="fastqc/{run}/{sample}_fastqc.zip"
@@ -55,7 +55,7 @@ rule merge:
     input:
         get_files
     output:
-        temp("data/{run}_{sample}.fastq.gz")
+        temp("data/{run}.{sample}.fastq.gz")
     run:
         if len(input) == 1:
             shell("ln -s {input} {output}")
