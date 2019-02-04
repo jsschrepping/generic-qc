@@ -1,4 +1,4 @@
-FROM pwlb/rna-seq-pipeline-base:v0.1.1
+FROM jsschrepping/bioinfo-base-image:latest
 
 COPY Snakefile /Snakefile
 

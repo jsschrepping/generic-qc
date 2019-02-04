@@ -1,8 +1,10 @@
 from pathlib import Path
 from snakemake.shell import shell
 
-runs, samples, _ = glob_wildcards("/input/{run}/{sample}_{num,\d{3}}.fastq.gz")
+# In order to infer the IDs from present files, Snakemake provides the glob_wildcards function. The function matches the given pattern against files present in the filesystem and thereby infers the values for all wildcards in the pattern. A named tuple that contains a list of values for each wildcarf is returned.
+runs, samples, nums = glob_wildcards("/input/{run}/{sample}_{num,\d{3}}.fastq.gz")
 
+# define function to retrieve all the files from input directory
 def get_files(wildcards):
     glob = Path("/input").glob(f"""{wildcards.run}/{wildcards.sample}_*.fastq.gz""")
     files = list(map(str,glob))
@@ -11,6 +13,7 @@ def get_files(wildcards):
     files.sort()
     return files
 
+# Snakemake rules
 rule all:
     input:
         "multiqc/multiqc.html",
@@ -29,11 +32,11 @@ rule multiqc:
     params:
         ""
     wrapper:
-        "0.27.0/bio/multiqc"
+        "0.31.1/bio/multiqc"
 
 rule fastqc:
     input:
-        "data/{run}__{sample}.fastq.gz"
+        "data/{run}_{sample}.fastq.gz"
     output:
         html="fastqc/{run}/{sample}_fastqc.html",
         zip="fastqc/{run}/{sample}_fastqc.zip"
@@ -44,13 +47,15 @@ rule fastqc:
     params:
         "-t 4"
     wrapper:
-        "0.27.0/bio/fastqc"
+        "0.31.1/bio/fastqc"
 
+# Instead of specifying strings or lists of strings as input files, snakemake can also make use of functions that return single or lists of input files. Instead of specifying strings or lists of strings as input files, snakemake can also make use of functions that return single or lists of input files.
+     
 rule merge:
     input:
         get_files
     output:
-        temp("data/{run}__{sample}.fastq.gz")
+        temp("data/{run}_{sample}.fastq.gz")
     run:
         if len(input) == 1:
             shell("ln -s {input} {output}")

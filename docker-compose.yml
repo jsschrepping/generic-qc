@@ -3,7 +3,7 @@ version: '3'
 services:
   generic-qc:
     build: .
-    image: pwlb/generic-qc:0.2.1
+    image: jsschrepping/generic-qc:latest
     command: --jobs 11
 
     volumes:
