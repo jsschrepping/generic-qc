@@ -2,8 +2,7 @@ version: '3'
 
 services:
   generic-qc:
-    # build: .
-    image: jsschrepping/generic-qc:jss_v0.0.1
+    image: jsschrepping/generic-qc:jss_v0.0.2
     command: --jobs 11
 
     volumes:

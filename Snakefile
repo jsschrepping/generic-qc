@@ -61,7 +61,3 @@ rule merge:
             shell("ln -s {input} {output}")
         else:
             shell("cat {input} > {output}")
-
-rule clean:
-    shell:
-        "rm -rf fastqc logs data"
